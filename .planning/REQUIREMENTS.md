@@ -6,7 +6,7 @@
 
 - [x] **SPEC-01**: Connexion detects `openapi: "3.1.x"` and routes to `OpenAPI31Specification` class (version tuple >= (3,1,0))
 - [x] **SPEC-02**: `OpenAPI31Specification` loads and validates specs against the OAS 3.1 JSON meta-schema (`resources/schemas/v3.1/schema.json`)
-- [ ] **SPEC-03**: `OpenAPI31Operation` extends operation handling for 3.1-specific features (webhooks, pathItems refs, etc.)
+- [x] **SPEC-03**: `OpenAPI31Operation` extends operation handling for 3.1-specific features (webhooks, pathItems refs, etc.)
 - [x] **SPEC-04**: Error messages reference 3.1.0 when a 3.1 spec fails validation (not "3.0.0")
 - [x] **SPEC-05**: `Specification.from_dict()` correctly branches: `< (3,0,0)` → Swagger2, `>= (3,0,0) and < (3,1,0)` → OpenAPI3.0, `>= (3,1,0)` → OpenAPI3.1
 
@@ -25,12 +25,12 @@
 
 ### OAS 3.1 Structural Features (FEAT)
 
-- [ ] **FEAT-01**: Top-level `webhooks` key is parsed and accessible via `OpenAPI31Specification`
-- [ ] **FEAT-02**: `components/pathItems` is recognized and resolvable via `$ref`
-- [ ] **FEAT-03**: Minimal documents (no `paths` key) load without error — valid in 3.1
-- [ ] **FEAT-04**: `jsonSchemaDialect` top-level key is recognized and respected
-- [ ] **FEAT-05**: `mutualTLS` security scheme type is recognized by `SecurityHandlerFactory`
-- [ ] **FEAT-06**: `summary` and `description` alongside `$ref` objects are preserved
+- [x] **FEAT-01**: Top-level `webhooks` key is parsed and accessible via `OpenAPI31Specification`
+- [x] **FEAT-02**: `components/pathItems` is recognized and resolvable via `$ref`
+- [x] **FEAT-03**: Minimal documents (no `paths` key) load without error — valid in 3.1
+- [x] **FEAT-04**: `jsonSchemaDialect` top-level key is recognized and respected
+- [x] **FEAT-05**: `mutualTLS` security scheme type is recognized by `SecurityHandlerFactory`
+- [x] **FEAT-06**: `summary` and `description` alongside `$ref` objects are preserved
 
 ### Testing & Validation (TEST)
 
@@ -74,13 +74,13 @@
 | VALID-08 | Phase 2 | Complete |
 | VALID-09 | Phase 2 | Complete |
 | VALID-10 | Phase 2 | Complete |
-| SPEC-03 | Phase 3 | Pending |
-| FEAT-01 | Phase 3 | Pending |
-| FEAT-02 | Phase 3 | Pending |
-| FEAT-03 | Phase 3 | Pending |
-| FEAT-04 | Phase 3 | Pending |
-| FEAT-05 | Phase 3 | Pending |
-| FEAT-06 | Phase 3 | Pending |
+| SPEC-03 | Phase 3 | Complete |
+| FEAT-01 | Phase 3 | Complete |
+| FEAT-02 | Phase 3 | Complete |
+| FEAT-03 | Phase 3 | Complete |
+| FEAT-04 | Phase 3 | Complete |
+| FEAT-05 | Phase 3 | Complete |
+| FEAT-06 | Phase 3 | Complete |
 | TEST-01 | Phase 4 | Pending |
 | TEST-02 | Phase 4 | Pending |
 | TEST-03 | Phase 4 | Pending |
@@ -90,4 +90,4 @@
 | TEST-07 | Phase 4 | Pending |
 
 ---
-*Last updated: 2026-02-06 (phase 2 complete)*
+*Last updated: 2026-02-05 (phase 3 complete)*

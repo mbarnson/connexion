@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Spec Detection & Schema** - Version routing and meta-schema validation
 - [x] **Phase 2: JSON Schema 2020-12 Validation** - Core validation engine upgrade
-- [ ] **Phase 3: OAS 3.1 Features** - Structural features and operation handling
+- [x] **Phase 3: OAS 3.1 Features** - Structural features and operation handling
 - [ ] **Phase 4: Testing & Integration** - Comprehensive validation and CI
 
 ## Phase Details
@@ -83,9 +83,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 03-01-PLAN.md -- Spec-level features: webhooks property, pathItems defaults, minimal document support, jsonSchemaDialect property
-- [ ] 03-02-PLAN.md -- Operation-level features: OpenAPI31Operation class, mutualTLS recognition in SecurityHandlerFactory
-- [ ] 03-03-PLAN.md -- Comprehensive test suite for all Phase 3 features (FEAT-01 through FEAT-06, SPEC-03)
+- [x] 03-01-PLAN.md -- Spec-level features: webhooks property, pathItems defaults, minimal document support, jsonSchemaDialect property
+- [x] 03-02-PLAN.md -- Operation-level features: OpenAPI31Operation class, mutualTLS recognition in SecurityHandlerFactory
+- [x] 03-03-PLAN.md -- Comprehensive test suite for all Phase 3 features (FEAT-01 through FEAT-06, SPEC-03)
 
 ### Phase 4: Testing & Integration
 **Goal**: Comprehensive test coverage proves all OAS 3.1 features work correctly, SongViber's spec loads and validates, and all existing tests pass with no regressions
@@ -117,8 +117,8 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 |-------|----------------|--------|-----------|
 | 1. Spec Detection & Schema | 2/2 | ✓ Complete | 2026-02-05 |
 | 2. JSON Schema 2020-12 Validation | 3/3 | ✓ Complete | 2026-02-06 |
-| 3. OAS 3.1 Features | 0/3 | Not started | - |
+| 3. OAS 3.1 Features | 3/3 | ✓ Complete | 2026-02-05 |
 | 4. Testing & Integration | 0/TBD | Not started | - |
 
 ---
-*Last updated: 2026-02-06 (phase 3 planned)*
+*Last updated: 2026-02-05 (phase 3 complete)*
