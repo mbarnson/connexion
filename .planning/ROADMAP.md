@@ -57,10 +57,12 @@ Plans:
   9. Form data with allOf/anyOf/oneOf composition validates correctly
   10. `unevaluatedProperties` keyword validates correctly in schemas
 
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 02-01: TBD during planning
+- [ ] 02-01-PLAN.md -- Draft 2020-12 validators, version-aware $ref resolution, nullable rejection, spec_version on operations
+- [ ] 02-02-PLAN.md -- Wire spec_version through middleware to all validators, comprehensive VALID-* test suite
+- [ ] 02-03-PLAN.md -- Migrate SongViber spec from nullable: true to type arrays
 
 ### Phase 3: OAS 3.1 Features
 **Goal**: All OpenAPI 3.1 structural features (webhooks, pathItems, minimal docs, mutualTLS, jsonSchemaDialect, $ref siblings) are recognized, parsed, and accessible
@@ -112,9 +114,9 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Spec Detection & Schema | 2/2 | ✓ Complete | 2026-02-05 |
-| 2. JSON Schema 2020-12 Validation | 0/TBD | Not started | - |
+| 2. JSON Schema 2020-12 Validation | 0/3 | In progress | - |
 | 3. OAS 3.1 Features | 0/TBD | Not started | - |
 | 4. Testing & Integration | 0/TBD | Not started | - |
 
 ---
-*Last updated: 2026-02-05 (phase 1 complete)*
+*Last updated: 2026-02-05 (phase 2 planned)*
