@@ -32,10 +32,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Error messages reference "3.1.0" when a 3.1 spec fails validation (not "3.0.0")
   4. Swagger 2.0 and OpenAPI 3.0 specs continue routing correctly (no regression)
 
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 01-01: TBD during planning
+- [ ] 01-01-PLAN.md -- Bundle OAS 3.1 meta-schema, create OpenAPI31Specification class, update version routing
+- [ ] 01-02-PLAN.md -- Test suite proving version detection, routing, validation, and zero regression
 
 ### Phase 2: JSON Schema 2020-12 Validation
 **Goal**: All request and response validation for 3.1 specs uses JSON Schema 2020-12 semantics with full support for type arrays, nullable compatibility, and updated keywords
@@ -106,14 +107,14 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Spec Detection & Schema | 0/TBD | Not started | - |
+| 1. Spec Detection & Schema | 0/2 | Planned | - |
 | 2. JSON Schema 2020-12 Validation | 0/TBD | Not started | - |
 | 3. OAS 3.1 Features | 0/TBD | Not started | - |
 | 4. Testing & Integration | 0/TBD | Not started | - |
 
 ---
-*Last updated: 2026-02-05 (roadmap creation)*
+*Last updated: 2026-02-05 (phase 1 planned)*
