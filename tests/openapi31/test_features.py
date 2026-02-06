@@ -17,7 +17,6 @@ from connexion.resolver import Resolver
 from connexion.security import SecurityHandlerFactory
 from connexion.spec import (
     OpenAPI31Specification,
-    OpenAPISpecification,
     Specification,
 )
 
@@ -387,7 +386,7 @@ class TestMutualTLS:
 
         # Should not raise or return None inappropriately
         # (apiKey and http schemes should return handler, oauth2 might return None without x-tokenInfoFunc)
-        result = factory.parse_security_scheme(security_scheme, [])
+        factory.parse_security_scheme(security_scheme, [])
         # Just verify it doesn't crash - actual handler behavior tested elsewhere
 
 
