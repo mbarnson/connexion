@@ -12,16 +12,16 @@
 
 ### JSON Schema 2020-12 Validation (VALID)
 
-- [ ] **VALID-01**: 3.1 specs use `Draft202012Validator` (from jsonschema) for request body validation instead of `Draft4Validator`
-- [ ] **VALID-02**: 3.1 specs use `Draft202012Validator` for response body validation
-- [ ] **VALID-03**: Type arrays are supported (`type: ["string", "null"]` validates correctly)
-- [ ] **VALID-04**: `nullable: true` in 3.1 specs is handled for backwards compatibility (internally mapped to type array)
-- [ ] **VALID-05**: `exclusiveMinimum` and `exclusiveMaximum` work as numeric values (not booleans) in 3.1 specs
-- [ ] **VALID-06**: `const` keyword validates correctly in 3.1 specs
-- [ ] **VALID-07**: `$ref` with sibling properties is preserved and validated (not stripped on resolution)
-- [ ] **VALID-08**: Parameter validation uses appropriate validator for 3.1 specs
-- [ ] **VALID-09**: Form data validation supports allOf/anyOf/oneOf composition in 3.1 specs
-- [ ] **VALID-10**: `unevaluatedProperties` keyword is supported in 3.1 specs
+- [x] **VALID-01**: 3.1 specs use `Draft202012Validator` (from jsonschema) for request body validation instead of `Draft4Validator`
+- [x] **VALID-02**: 3.1 specs use `Draft202012Validator` for response body validation
+- [x] **VALID-03**: Type arrays are supported (`type: ["string", "null"]` validates correctly)
+- [x] **VALID-04**: `nullable: true` in 3.1 specs is strictly rejected at load time with actionable error pointing to type arrays
+- [x] **VALID-05**: `exclusiveMinimum` and `exclusiveMaximum` work as numeric values (not booleans) in 3.1 specs
+- [x] **VALID-06**: `const` keyword validates correctly in 3.1 specs
+- [x] **VALID-07**: `$ref` with sibling properties is preserved and validated (not stripped on resolution)
+- [x] **VALID-08**: Parameter validation uses appropriate validator for 3.1 specs
+- [x] **VALID-09**: Form data validation supports allOf/anyOf/oneOf composition in 3.1 specs
+- [x] **VALID-10**: `unevaluatedProperties` keyword is supported in 3.1 specs
 
 ### OAS 3.1 Structural Features (FEAT)
 
@@ -64,16 +64,16 @@
 | SPEC-02 | Phase 1 | Complete |
 | SPEC-04 | Phase 1 | Complete |
 | SPEC-05 | Phase 1 | Complete |
-| VALID-01 | Phase 2 | Pending |
-| VALID-02 | Phase 2 | Pending |
-| VALID-03 | Phase 2 | Pending |
-| VALID-04 | Phase 2 | Pending |
-| VALID-05 | Phase 2 | Pending |
-| VALID-06 | Phase 2 | Pending |
-| VALID-07 | Phase 2 | Pending |
-| VALID-08 | Phase 2 | Pending |
-| VALID-09 | Phase 2 | Pending |
-| VALID-10 | Phase 2 | Pending |
+| VALID-01 | Phase 2 | Complete |
+| VALID-02 | Phase 2 | Complete |
+| VALID-03 | Phase 2 | Complete |
+| VALID-04 | Phase 2 | Complete |
+| VALID-05 | Phase 2 | Complete |
+| VALID-06 | Phase 2 | Complete |
+| VALID-07 | Phase 2 | Complete |
+| VALID-08 | Phase 2 | Complete |
+| VALID-09 | Phase 2 | Complete |
+| VALID-10 | Phase 2 | Complete |
 | SPEC-03 | Phase 3 | Pending |
 | FEAT-01 | Phase 3 | Pending |
 | FEAT-02 | Phase 3 | Pending |
@@ -90,4 +90,4 @@
 | TEST-07 | Phase 4 | Pending |
 
 ---
-*Last updated: 2026-02-05 (phase 1 complete)*
+*Last updated: 2026-02-06 (phase 2 complete)*

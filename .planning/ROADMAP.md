@@ -13,7 +13,7 @@ This roadmap delivers comprehensive OpenAPI 3.1.0 support to Connexion through f
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Spec Detection & Schema** - Version routing and meta-schema validation
-- [ ] **Phase 2: JSON Schema 2020-12 Validation** - Core validation engine upgrade
+- [x] **Phase 2: JSON Schema 2020-12 Validation** - Core validation engine upgrade
 - [ ] **Phase 3: OAS 3.1 Features** - Structural features and operation handling
 - [ ] **Phase 4: Testing & Integration** - Comprehensive validation and CI
 
@@ -61,8 +61,8 @@ Plans:
 
 Plans:
 - [x] 02-01-PLAN.md -- Draft 2020-12 validators, version-aware $ref resolution, nullable rejection, spec_version on operations
-- [ ] 02-02-PLAN.md -- Wire spec_version through middleware to all validators, comprehensive VALID-* test suite
-- [ ] 02-03-PLAN.md -- Migrate SongViber spec from nullable: true to type arrays
+- [x] 02-02-PLAN.md -- Wire spec_version through middleware to all validators, comprehensive VALID-* test suite
+- [x] 02-03-PLAN.md -- Migrate SongViber spec from nullable: true to type arrays
 
 ### Phase 3: OAS 3.1 Features
 **Goal**: All OpenAPI 3.1 structural features (webhooks, pathItems, minimal docs, mutualTLS, jsonSchemaDialect, $ref siblings) are recognized, parsed, and accessible
@@ -114,9 +114,9 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Spec Detection & Schema | 2/2 | ✓ Complete | 2026-02-05 |
-| 2. JSON Schema 2020-12 Validation | 0/3 | In progress | - |
+| 2. JSON Schema 2020-12 Validation | 3/3 | ✓ Complete | 2026-02-06 |
 | 3. OAS 3.1 Features | 0/TBD | Not started | - |
 | 4. Testing & Integration | 0/TBD | Not started | - |
 
 ---
-*Last updated: 2026-02-05 (phase 2 planned)*
+*Last updated: 2026-02-06 (phase 2 complete)*
