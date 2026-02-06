@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-05)
 ## Current Position
 
 Phase: 1 of 4 (Spec Detection & Schema)
-Plan: 1 of TBD in current phase
-Status: In progress
-Last activity: 2026-02-05 — Completed 01-01-PLAN.md
+Plan: 2 of 2 in current phase
+Status: Phase complete
+Last activity: 2026-02-05 — Completed 01-02-PLAN.md
 
-Progress: [█░░░░░░░░░] 10%
+Progress: [██░░░░░░░░] 20%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
-- Average duration: 3 min
-- Total execution time: 0.05 hours
+- Total plans completed: 2
+- Average duration: 2.5 min
+- Total execution time: 0.08 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-spec-detection-schema | 1 | 3min | 3min |
+| 01-spec-detection-schema | 2 | 5min | 2.5min |
 
 **Recent Trend:**
-- Last 3 plans: 3min (avg)
-- Trend: Stable
+- Last 3 plans: 2.5min (avg)
+- Trend: Improving
 
 *Updated after each plan completion*
 
@@ -56,6 +56,11 @@ Recent decisions affecting current work:
 - Unsupported versions (4.0+) fail with helpful error listing supported versions
 - Version-aware error messages include detected OAS version
 
+**From 01-02 (Test Suite):**
+- Inline spec fixtures over YAML files for self-contained tests
+- Parametrized version tests ensure systematic patch version coverage
+- Explicit requirement mapping in test organization
+
 ### Pending Todos
 
 None yet.
@@ -66,18 +71,19 @@ None yet.
 - ✓ Version branching at `connexion/spec.py:207` - DONE (01-01)
 - ✓ Spec-level validation uses `Draft202012Validator` for 3.1 - DONE (01-01)
 - ✓ Schema files - `v3.1/schema.json` bundled - DONE (01-01)
+- ✓ Comprehensive test suite for Phase 1 - DONE (01-02)
 - `nullable` handling via `NullableTypeValidator` needs 3.1 context awareness (Phase 2)
 - `$ref` resolution strips siblings — must preserve for 3.1 (Phase 2)
 - Operations class decision: Reusing OpenAPIOperation for now (may need OpenAPI31Operation in Phase 3)
 
 **Test Parallelism:**
 - Test suite runs specs in parallel (Swagger 2.0, OpenAPI 3.0)
-- Will need OpenAPI 3.1 fixtures added to parallelization (Phase 4)
+- OpenAPI 3.1 test fixtures created (01-02) - ready for parallelization in Phase 4
 
 ## Session Continuity
 
-Last session: 2026-02-05 19:28 (plan execution)
-Stopped at: Completed 01-01-PLAN.md (Spec Detection & Schema)
+Last session: 2026-02-05 19:35 (plan execution)
+Stopped at: Completed 01-02-PLAN.md (Phase 1 complete: Spec Detection & Schema)
 Resume file: None
 
 ---
