@@ -9,29 +9,30 @@ See: .planning/PROJECT.md (updated 2026-02-05)
 
 ## Current Position
 
-Phase: 1 of 4 (Spec Detection & Schema) — VERIFIED COMPLETE
-Plan: 2 of 2 in current phase
-Status: Phase 1 verified, ready for Phase 2
-Last activity: 2026-02-05 — Phase 1 verified (9/9 must-haves passed)
+Phase: 2 of 4 (JSON Schema 2020-12 Validation)
+Plan: 1 of 3 in current phase
+Status: In progress
+Last activity: 2026-02-06 — Completed 02-01-PLAN.md (Validator Infrastructure Foundation)
 
-Progress: [██▓░░░░░░░] 25%
+Progress: [███░░░░░░░] 30%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 2
-- Average duration: 2.5 min
-- Total execution time: 0.08 hours
+- Total plans completed: 3
+- Average duration: 2.8 min
+- Total execution time: 0.14 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-spec-detection-schema | 2 | 5min | 2.5min |
+| 02-json-schema-2020-12-validation | 1 | 3.8min | 3.8min |
 
 **Recent Trend:**
-- Last 3 plans: 2.5min (avg)
-- Trend: Improving
+- Last 3 plans: 3.1min (avg)
+- Trend: Stable
 
 *Updated after each plan completion*
 
@@ -61,6 +62,11 @@ Recent decisions affecting current work:
 - Parametrized version tests ensure systematic patch version coverage
 - Explicit requirement mapping in test organization
 
+**From 02-01 (Validator Infrastructure):**
+- Explicit nullable detection before meta-schema validation (meta-schema doesn't prohibit it)
+- Version-aware resolve_refs with spec_version parameter for $ref sibling preservation
+- spec_version flows from Specification → Operation for validator selection
+
 ### Pending Todos
 
 None yet.
@@ -72,8 +78,10 @@ None yet.
 - ✓ Spec-level validation uses `Draft202012Validator` for 3.1 - DONE (01-01)
 - ✓ Schema files - `v3.1/schema.json` bundled - DONE (01-01)
 - ✓ Comprehensive test suite for Phase 1 - DONE (01-02)
-- `nullable` handling via `NullableTypeValidator` needs 3.1 context awareness (Phase 2)
-- `$ref` resolution strips siblings — must preserve for 3.1 (Phase 2)
+- ✓ `nullable` handling - strict rejection with actionable errors - DONE (02-01)
+- ✓ `$ref` resolution - version-aware sibling preservation - DONE (02-01)
+- ✓ Draft202012 validators created - DONE (02-01)
+- ✓ spec_version plumbing through operations - DONE (02-01)
 - Operations class decision: Reusing OpenAPIOperation for now (may need OpenAPI31Operation in Phase 3)
 
 **Test Parallelism:**
@@ -82,9 +90,9 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-05 (phase execution + verification)
-Stopped at: Phase 1 verified complete, ready for Phase 2
+Last session: 2026-02-06 (plan execution)
+Stopped at: Completed 02-01-PLAN.md
 Resume file: None
 
 ---
-*Last updated: 2026-02-05*
+*Last updated: 2026-02-06*
