@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-05)
 ## Current Position
 
 Phase: 3 of 4 — IN PROGRESS
-Plan: 1 of 3 in current phase
-Status: Phase 3 started - spec-level features complete
-Last activity: 2026-02-05 — Completed 03-01-PLAN.md
+Plan: 2 of 3 in current phase
+Status: Phase 3 in progress - operation-level features complete
+Last activity: 2026-02-06 — Completed 03-02-PLAN.md
 
-Progress: [█████▓░░░░] 55%
+Progress: [██████░░░░] 60%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 6
+- Total plans completed: 7
 - Average duration: 3.0 min
-- Total execution time: 0.30 hours
+- Total execution time: 0.35 hours
 
 **By Phase:**
 
@@ -29,10 +29,10 @@ Progress: [█████▓░░░░] 55%
 |-------|-------|-------|----------|
 | 01-spec-detection-schema | 2 | 5min | 2.5min |
 | 02-json-schema-2020-12-validation | 3 | 10.5min | 3.5min |
-| 03-oas-3.1-features | 1 | 3min | 3.0min |
+| 03-oas-3.1-features | 2 | 6min | 3.0min |
 
 **Recent Trend:**
-- Last 3 plans: 3.3min (avg)
+- Last 3 plans: 3.0min (avg)
 - Trend: Stable
 
 *Updated after each plan completion*
@@ -85,6 +85,12 @@ Recent decisions affecting current work:
 - paths defaults to empty dict in _set_defaults (enables minimal documents)
 - All component types initialized (schemas, responses, parameters, examples, requestBodies, headers, securitySchemes, links, callbacks, pathItems)
 
+**From 03-02 (Operation-Level Features):**
+- OpenAPI31Operation class extends OpenAPIOperation with json_schema_dialect context
+- json_schema_dialect flows from spec → operation for downstream validator usage
+- mutualTLS security scheme recognized via security_passthrough (avoids middleware ordering conflicts)
+- Certificate validation delegated to TLS infrastructure/custom middleware
+
 ### Pending Todos
 
 None yet.
@@ -105,7 +111,8 @@ None yet.
 - ✓ SongViber spec migrated to 3.1 type arrays - DONE (02-03)
 - ✓ Spec-level OAS 3.1 features exposed (webhooks, json_schema_dialect, pathItems) - DONE (03-01)
 - ✓ Minimal document support (no paths required) - DONE (03-01)
-- Operations class decision: Reusing OpenAPIOperation for now (may need OpenAPI31Operation in Phase 3)
+- ✓ OpenAPI31Operation class with json_schema_dialect context - DONE (03-02)
+- ✓ mutualTLS security scheme recognition - DONE (03-02)
 
 **Test Parallelism:**
 - Test suite runs specs in parallel (Swagger 2.0, OpenAPI 3.0)
@@ -113,9 +120,9 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-05 (phase execution)
-Stopped at: Completed 03-01-PLAN.md
+Last session: 2026-02-06 (phase execution)
+Stopped at: Completed 03-02-PLAN.md
 Resume file: None
 
 ---
-*Last updated: 2026-02-05 (03-01 complete)*
+*Last updated: 2026-02-06 (03-02 complete)*
