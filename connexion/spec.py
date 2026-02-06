@@ -479,6 +479,32 @@ class OpenAPI31Specification(Specification):
         return self._spec["components"]
 
     @property
+    def webhooks(self):
+        """Map of webhook names to Path Item Objects.
+
+        From OAS 3.1: webhooks describe requests initiated by the API provider
+        to consumers, not inbound HTTP requests. They are documented for client
+        code generation and documentation purposes.
+
+        Returns:
+            dict: Webhook name to Path Item Object, or empty dict if none defined.
+        """
+        return self._spec.get("webhooks", {})
+
+    @property
+    def json_schema_dialect(self):
+        """Default JSON Schema dialect URI for Schema Objects in this spec.
+
+        From OAS 3.1: The default value for the $schema keyword within Schema
+        Objects contained within this OAS document. If not specified, the OAS 3.1
+        dialect (Draft 2020-12) is assumed.
+
+        Returns:
+            str or None: Dialect URI, or None if using the default OAS 3.1 dialect.
+        """
+        return self._spec.get("jsonSchemaDialect")
+
+    @property
     def base_path(self):
         servers = self._spec.get("servers", [])
         try:
