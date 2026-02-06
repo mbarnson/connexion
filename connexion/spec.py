@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 
 from .exceptions import InvalidSpecification
 from .json_schema import NullableTypeValidator, URLHandler, resolve_refs
-from .operations import AbstractOperation, OpenAPIOperation, Swagger2Operation
+from .operations import AbstractOperation, OpenAPI31Operation, OpenAPIOperation, Swagger2Operation
 from .utils import deep_get
 
 validate_properties = Draft4Validator.VALIDATORS["properties"]
@@ -384,7 +384,7 @@ class OpenAPI31Specification(Specification):
     """Python interface for an OpenAPI 3.1 specification."""
 
     yaml_name = "openapi31.yaml"
-    operation_cls = OpenAPIOperation  # Reuse 3.0 operation class; Phase 3 may introduce OpenAPI31Operation
+    operation_cls = OpenAPI31Operation
 
     openapi_schema = json.loads(
         pkgutil.get_data("connexion", "resources/schemas/v3.1/schema.json")  # type: ignore

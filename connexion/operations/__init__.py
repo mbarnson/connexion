@@ -8,4 +8,5 @@ OpenAPI specification, and exposes the result to be registered as a route on the
 
 from .abstract import AbstractOperation  # noqa
 from .openapi import OpenAPIOperation  # noqa
+from .openapi31 import OpenAPI31Operation  # noqa
 from .swagger2 import Swagger2Operation  # noqa
