@@ -32,6 +32,7 @@ class OpenAPIOperation(AbstractOperation):
         components=None,
         randomize_endpoint=None,
         uri_parser_class=None,
+        spec_version=(3, 0, 0),
     ):
         """
         This class uses the OperationID identify the module and function that will handle the operation
@@ -64,6 +65,8 @@ class OpenAPIOperation(AbstractOperation):
         :type randomize_endpoint: integer
         :param uri_parser_class: class to use for uri parsing
         :type uri_parser_class: AbstractURIParser
+        :param spec_version: OpenAPI version tuple (e.g., (3, 1, 0))
+        :type spec_version: tuple
         """
         self.components = components or {}
 
@@ -80,6 +83,7 @@ class OpenAPIOperation(AbstractOperation):
             security_schemes=security_schemes,
             randomize_endpoint=randomize_endpoint,
             uri_parser_class=uri_parser_class,
+            spec_version=spec_version,
         )
 
         self._parameters = operation.get("parameters", [])
@@ -111,6 +115,7 @@ class OpenAPIOperation(AbstractOperation):
             app_security=spec.security,
             security_schemes=spec.security_schemes,
             components=spec.components,
+            spec_version=spec.version,
             *args,
             **kwargs,
         )

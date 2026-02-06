@@ -43,6 +43,7 @@ class AbstractOperation(metaclass=abc.ABCMeta):
         security_schemes=None,
         randomize_endpoint=None,
         uri_parser_class=None,
+        spec_version=(3, 0, 0),
     ):
         """
         :param method: HTTP method
@@ -61,6 +62,8 @@ class AbstractOperation(metaclass=abc.ABCMeta):
         :type randomize_endpoint: integer
         :param uri_parser_class: class to use for uri parsing
         :type uri_parser_class: AbstractURIParser
+        :param spec_version: OpenAPI version tuple (e.g., (3, 1, 0))
+        :type spec_version: tuple
         """
         self._method = method
         self._path = path
@@ -71,6 +74,7 @@ class AbstractOperation(metaclass=abc.ABCMeta):
         self._uri_parser_class = uri_parser_class
         self._randomize_endpoint = randomize_endpoint
         self._operation_id = self._operation.get("operationId")
+        self._spec_version = spec_version
 
         self._resolution = resolver.resolve(self)
         self._operation_id = self._resolution.operation_id
@@ -249,3 +253,12 @@ class AbstractOperation(metaclass=abc.ABCMeta):
         :rtype: types.FunctionType
         """
         return self._resolution.function
+
+    @property
+    def spec_version(self):
+        """
+        OpenAPI version tuple for this operation's parent spec.
+
+        :rtype: tuple
+        """
+        return self._spec_version

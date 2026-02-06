@@ -390,6 +390,15 @@ class OpenAPI31Specification(Specification):
         pkgutil.get_data("connexion", "resources/schemas/v3.1/schema.json")  # type: ignore
     )
 
+    def __init__(self, raw_spec, *, base_uri=""):
+        """Initialize OpenAPI 3.1 spec with version-aware ref resolution."""
+        self._raw_spec = copy.deepcopy(raw_spec)
+        self._set_defaults(raw_spec)
+        self._validate_spec(raw_spec)
+        # Pass spec_version to resolve_refs for 3.1-aware $ref sibling preservation
+        self._spec = resolve_refs(raw_spec, base_uri=base_uri, spec_version=(3, 1, 0))
+        self._base_uri = base_uri
+
     @classmethod
     def _set_defaults(cls, spec):
         spec.setdefault("components", {})
@@ -405,6 +414,33 @@ class OpenAPI31Specification(Specification):
         logger.info(
             "Detected OpenAPI %s spec, using OpenAPI31Specification handler", version
         )
+
+        # First, explicitly check for nullable keyword usage (3.0-only pattern)
+        def _check_nullable(obj, path=""):
+            """Recursively check for nullable keyword in spec."""
+            if isinstance(obj, dict):
+                if "nullable" in obj:
+                    location = f" at '{path}'" if path else ""
+                    raise InvalidSpecification(
+                        f"OpenAPI {version} spec validation failed{location}: "
+                        f"'nullable' keyword is not supported in OpenAPI 3.1.\n\n"
+                        f"Hint: OpenAPI 3.1 removed the 'nullable' keyword. "
+                        f"Use type arrays instead:\n"
+                        f"  Before:  type: string\n"
+                        f"           nullable: true\n"
+                        f"  After:   type: [string, 'null']"
+                    )
+                for key, value in obj.items():
+                    new_path = f"{path}.{key}" if path else key
+                    _check_nullable(value, new_path)
+            elif isinstance(obj, list):
+                for i, item in enumerate(obj):
+                    new_path = f"{path}[{i}]"
+                    _check_nullable(item, new_path)
+
+        _check_nullable(spec)
+
+        # Then validate against meta-schema
         try:
             OpenApi31Validator = create_spec_validator_31(spec)
             validator = OpenApi31Validator(cls.openapi_schema)
