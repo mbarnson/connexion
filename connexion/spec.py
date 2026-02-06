@@ -5,6 +5,7 @@ This module defines Python interfaces for OpenAPI specifications.
 import abc
 import copy
 import json
+import logging
 import os
 import pathlib
 import pkgutil
@@ -15,8 +16,10 @@ from urllib.parse import urlsplit
 import jinja2
 import jsonschema
 import yaml
-from jsonschema import Draft4Validator
+from jsonschema import Draft4Validator, Draft202012Validator
 from jsonschema.validators import extend as extend_validator
+
+logger = logging.getLogger(__name__)
 
 from .exceptions import InvalidSpecification
 from .json_schema import NullableTypeValidator, URLHandler, resolve_refs
@@ -60,8 +63,40 @@ def create_spec_validator(spec: dict) -> Draft4Validator:
     return SpecValidator
 
 
+def create_spec_validator_31(spec: dict) -> Draft202012Validator:
+    """Create a Validator to validate an OpenAPI 3.1 spec against the OAS 3.1 schema.
+
+    Uses Draft 2020-12 validator base, matching OAS 3.1's JSON Schema alignment.
+
+    :param spec: specification to validate
+    """
+    validate_properties_202012 = Draft202012Validator.VALIDATORS["properties"]
+
+    def validate_defaults(validator, properties, instance, schema):
+        """Validation function to validate the `properties` subschema, enforcing each default
+        value validates against the schema in which it resides.
+        """
+        valid = True
+        for error in validate_properties_202012(validator, properties, instance, schema):
+            valid = False
+            yield error
+
+        # Validate default only when the subschema has validated successfully
+        if not valid:
+            return
+        if isinstance(instance, dict) and "default" in instance:
+            instance_validator = Draft202012Validator(instance)
+            for error in instance_validator.evolve(schema=instance).iter_errors(
+                instance["default"]
+            ):
+                yield error
+
+    SpecValidator31 = extend_validator(Draft202012Validator, {"properties": validate_defaults})
+    return SpecValidator31
+
+
 NO_SPEC_VERSION_ERR_MSG = """Unable to get the spec version.
-You are missing either '"swagger": "2.0"' or '"openapi": "3.0.0"'
+You are missing either '"swagger": "2.0"', '"openapi": "3.0.x"', or '"openapi": "3.1.x"'
 from the top level of your spec."""
 
 
@@ -181,7 +216,7 @@ class Specification(Mapping):
             raise InvalidSpecification(NO_SPEC_VERSION_ERR_MSG)
         try:
             version_tuple = tuple(map(int, version_string.split(".")))
-        except TypeError:
+        except (TypeError, ValueError):
             err = (
                 "Unable to convert version string to semantic version tuple: "
                 "{version_string}."
@@ -206,7 +241,16 @@ class Specification(Mapping):
         version = cls._get_spec_version(spec)
         if version < (3, 0, 0):
             return Swagger2Specification(spec, base_uri=base_uri)
-        return OpenAPISpecification(spec, base_uri=base_uri)
+        elif version < (3, 1, 0):
+            return OpenAPISpecification(spec, base_uri=base_uri)
+        elif version < (4, 0, 0):
+            return OpenAPI31Specification(spec, base_uri=base_uri)
+        else:
+            version_str = ".".join(map(str, version))
+            raise InvalidSpecification(
+                f"OpenAPI {version_str} is not supported. "
+                f"Supported versions: 2.0, 3.0.x, 3.1.x"
+            )
 
     def clone(self):
         return type(self)(copy.deepcopy(self._raw_spec), base_uri=self._base_uri)
@@ -318,6 +362,75 @@ class OpenAPISpecification(Specification):
         servers = self._spec.get("servers", [])
         try:
             # assume we're the first server in list
+            server = copy.deepcopy(servers[0])
+            server_vars = server.pop("variables", {})
+            server["url"] = server["url"].format(
+                **{k: v["default"] for k, v in server_vars.items()}
+            )
+            base_path = urlsplit(server["url"]).path
+        except IndexError:
+            base_path = ""
+        return canonical_base_path(base_path)
+
+    @base_path.setter
+    def base_path(self, base_path):
+        base_path = canonical_base_path(base_path)
+        user_servers = [{"url": base_path}]
+        self._raw_spec["servers"] = user_servers
+        self._spec["servers"] = user_servers
+
+
+class OpenAPI31Specification(Specification):
+    """Python interface for an OpenAPI 3.1 specification."""
+
+    yaml_name = "openapi31.yaml"
+    operation_cls = OpenAPIOperation  # Reuse 3.0 operation class; Phase 3 may introduce OpenAPI31Operation
+
+    openapi_schema = json.loads(
+        pkgutil.get_data("connexion", "resources/schemas/v3.1/schema.json")  # type: ignore
+    )
+
+    @classmethod
+    def _set_defaults(cls, spec):
+        spec.setdefault("components", {})
+
+    @classmethod
+    def _validate_spec(cls, spec):
+        """Validate spec against OpenAPI 3.1 meta-schema using Draft 2020-12 validator.
+
+        Per user decision: strict 3.1 validation. Reject 3.0-only patterns like
+        nullable: true with helpful error messages suggesting the 3.1 equivalent.
+        """
+        version = spec.get("openapi", "unknown")
+        logger.info(
+            "Detected OpenAPI %s spec, using OpenAPI31Specification handler", version
+        )
+        try:
+            OpenApi31Validator = create_spec_validator_31(spec)
+            validator = OpenApi31Validator(cls.openapi_schema)
+            validator.validate(spec)
+        except jsonschema.exceptions.ValidationError as e:
+            # Build version-aware error message per user decision:
+            # "Every validation error includes the detected OAS version"
+            error_path = ".".join(str(item) for item in e.path) if e.path else ""
+            msg = f"OpenAPI {version} spec validation failed"
+            if error_path:
+                msg += f" at '{error_path}'"
+            msg += f": {e.message}"
+            raise InvalidSpecification(msg)
+
+    @property
+    def security_schemes(self):
+        return self._spec["components"].get("securitySchemes", {})
+
+    @property
+    def components(self):
+        return self._spec["components"]
+
+    @property
+    def base_path(self):
+        servers = self._spec.get("servers", [])
+        try:
             server = copy.deepcopy(servers[0])
             server_vars = server.pop("variables", {})
             server["url"] = server["url"].format(
