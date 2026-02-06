@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-05)
 ## Current Position
 
 Phase: 1 of 4 (Spec Detection & Schema)
-Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-02-05 — Roadmap created
+Plan: 1 of TBD in current phase
+Status: In progress
+Last activity: 2026-02-05 — Completed 01-01-PLAN.md
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [█░░░░░░░░░] 10%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 0
-- Average duration: N/A
-- Total execution time: 0.0 hours
+- Total plans completed: 1
+- Average duration: 3 min
+- Total execution time: 0.05 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| 01-spec-detection-schema | 1 | 3min | 3min |
 
 **Recent Trend:**
-- No plans completed yet
-- Trend: N/A
+- Last 3 plans: 3min (avg)
+- Trend: Stable
 
 *Updated after each plan completion*
 
@@ -50,6 +50,12 @@ Recent decisions affecting current work:
 - `nullable: true` compat in 3.1 (SongViber spec uses it; common in real-world specs)
 - allOf/anyOf/oneOf in form data (valid per 3.1 spec)
 
+**From 01-01 (Spec Detection & Schema):**
+- OpenAPI31Specification as sibling class (not subclass) to OpenAPISpecification
+- Reuse OpenAPIOperation for 3.1 operations (Phase 3 may introduce OpenAPI31Operation)
+- Unsupported versions (4.0+) fail with helpful error listing supported versions
+- Version-aware error messages include detected OAS version
+
 ### Pending Todos
 
 None yet.
@@ -57,21 +63,21 @@ None yet.
 ### Blockers/Concerns
 
 **Architecture Notes:**
-- Version branching at `connexion/spec.py:207` needs 3-way split for 3.1
-- All validation uses `Draft4Validator` — needs `Draft202012Validator` for 3.1
-- Schema files need `v3.1/schema.json` addition
-- `nullable` handling via `NullableTypeValidator` needs 3.1 context awareness
-- `$ref` resolution strips siblings — must preserve for 3.1
-- Operations split needs `OpenAPI31Operation` subclass or extension
+- ✓ Version branching at `connexion/spec.py:207` - DONE (01-01)
+- ✓ Spec-level validation uses `Draft202012Validator` for 3.1 - DONE (01-01)
+- ✓ Schema files - `v3.1/schema.json` bundled - DONE (01-01)
+- `nullable` handling via `NullableTypeValidator` needs 3.1 context awareness (Phase 2)
+- `$ref` resolution strips siblings — must preserve for 3.1 (Phase 2)
+- Operations class decision: Reusing OpenAPIOperation for now (may need OpenAPI31Operation in Phase 3)
 
 **Test Parallelism:**
 - Test suite runs specs in parallel (Swagger 2.0, OpenAPI 3.0)
-- Will need OpenAPI 3.1 fixtures added to parallelization
+- Will need OpenAPI 3.1 fixtures added to parallelization (Phase 4)
 
 ## Session Continuity
 
-Last session: 2026-02-05 (roadmap creation)
-Stopped at: Roadmap and state files written, requirements traceability updated
+Last session: 2026-02-05 19:28 (plan execution)
+Stopped at: Completed 01-01-PLAN.md (Spec Detection & Schema)
 Resume file: None
 
 ---
