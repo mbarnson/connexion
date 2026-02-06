@@ -402,6 +402,21 @@ class OpenAPI31Specification(Specification):
     @classmethod
     def _set_defaults(cls, spec):
         spec.setdefault("components", {})
+        # Standard OAS 3.0 component types
+        spec["components"].setdefault("schemas", {})
+        spec["components"].setdefault("responses", {})
+        spec["components"].setdefault("parameters", {})
+        spec["components"].setdefault("examples", {})
+        spec["components"].setdefault("requestBodies", {})
+        spec["components"].setdefault("headers", {})
+        spec["components"].setdefault("securitySchemes", {})
+        spec["components"].setdefault("links", {})
+        spec["components"].setdefault("callbacks", {})
+        # OAS 3.1 addition
+        spec["components"].setdefault("pathItems", {})
+        # paths is optional in 3.1 (minimal documents), but ensure it exists
+        # so get_path_params / get_operation don't KeyError on the dict
+        spec.setdefault("paths", {})
 
     @classmethod
     def _validate_spec(cls, spec):
