@@ -214,14 +214,17 @@ paths:
                 - type: object
                   properties:
                     username:
-                      type: string
+                      type: array
+                      items:
+                        type: string
                   required:
                     - username
                 - type: object
                   properties:
                     email:
-                      type: string
-                      format: email
+                      type: array
+                      items:
+                        type: string
                   required:
                     - email
       responses:
