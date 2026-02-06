@@ -103,10 +103,12 @@ Plans:
   6. CI passes clean: flake8, isort, mypy with no new warnings
   7. An integration test with a 3.1 spec using all features combined loads and validates successfully
 
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 04-01: TBD during planning
+- [ ] 04-01-PLAN.md -- Lint cleanup + test consolidation into tests/openapi31/ directory
+- [ ] 04-02-PLAN.md -- Kitchen-sink YAML fixture, fakeapi handlers, integration test with HTTP round-trips
+- [ ] 04-03-PLAN.md -- Multi-version regression testing, comprehensive lint/type sweep, final quality gate
 
 ## Progress
 
@@ -118,7 +120,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 1. Spec Detection & Schema | 2/2 | ✓ Complete | 2026-02-05 |
 | 2. JSON Schema 2020-12 Validation | 3/3 | ✓ Complete | 2026-02-06 |
 | 3. OAS 3.1 Features | 3/3 | ✓ Complete | 2026-02-05 |
-| 4. Testing & Integration | 0/TBD | Not started | - |
+| 4. Testing & Integration | 0/3 | In Progress | - |
 
 ---
-*Last updated: 2026-02-05 (phase 3 complete)*
+*Last updated: 2026-02-06 (phase 4 planned)*
