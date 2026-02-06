@@ -500,6 +500,18 @@ class SecurityHandlerFactory:
             logger.warning("... No default implementation for openIdConnect")
             return None
 
+        elif security_type == "mutualTLS":
+            # OAS 3.1: Recognize mutualTLS as a valid security scheme type.
+            # Delegate actual TLS certificate validation to infrastructure layer
+            # or custom middleware. Do NOT implement a handler here -- connexion's
+            # SecurityMiddleware runs BEFORE custom middleware, so an active handler
+            # would conflict with AuthMiddleware patterns (e.g., SongViber's mTLS).
+            logger.debug(
+                "mutualTLS security scheme recognized; "
+                "certificate validation delegated to TLS infrastructure or custom middleware"
+            )
+            return self.security_passthrough
+
         # Custom security scheme handler
         elif (
             "scheme" in security_scheme
