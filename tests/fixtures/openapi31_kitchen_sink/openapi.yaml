@@ -1,0 +1,309 @@
+openapi: 3.1.0
+info:
+  title: OpenAPI 3.1 Kitchen Sink Test API
+  version: 1.0.0
+  description: Comprehensive test spec exercising every OAS 3.1 feature connexion supports
+
+jsonSchemaDialect: https://json-schema.org/draft/2020-12/schema
+
+servers:
+  - url: http://localhost:8080/api
+
+paths:
+  /type-array:
+    post:
+      operationId: fakeapi.openapi31_handlers.test_type_array
+      summary: Test type arrays (string or null)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nullable_field:
+                  type: ["string", "null"]
+                  description: Field that accepts string or null
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  received:
+                    type: ["string", "null"]
+        "400":
+          description: Validation error
+
+  /const-value:
+    post:
+      operationId: fakeapi.openapi31_handlers.test_const_value
+      summary: Test const keyword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                api_version:
+                  const: "v1.0.0"
+                  description: Must exactly match this constant
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+        "400":
+          description: Validation error
+
+  /exclusive-minimum:
+    post:
+      operationId: fakeapi.openapi31_handlers.test_exclusive_minimum
+      summary: Test exclusiveMinimum as numeric (OAS 3.1)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                count:
+                  type: integer
+                  exclusiveMinimum: 0
+                  description: Must be greater than 0 (not equal)
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+        "400":
+          description: Validation error
+
+  /ref-with-siblings:
+    get:
+      operationId: fakeapi.openapi31_handlers.test_ref_siblings
+      summary: Test $ref with sibling keywords preserved
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemWithSiblings"
+
+  /allof-composition:
+    post:
+      operationId: fakeapi.openapi31_handlers.test_allof_composition
+      summary: Test allOf composition
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - type: object
+                  properties:
+                    name:
+                      type: string
+                  required:
+                    - name
+                - type: object
+                  properties:
+                    age:
+                      type: integer
+                  required:
+                    - age
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /anyof-composition:
+    post:
+      operationId: fakeapi.openapi31_handlers.test_anyof_composition
+      summary: Test anyOf composition
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              anyOf:
+                - type: object
+                  properties:
+                    email:
+                      type: string
+                      format: email
+                  required:
+                    - email
+                - type: object
+                  properties:
+                    phone:
+                      type: string
+                  required:
+                    - phone
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /oneof-composition:
+    post:
+      operationId: fakeapi.openapi31_handlers.test_oneof_composition
+      summary: Test oneOf composition
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - type: object
+                  properties:
+                    type:
+                      const: "individual"
+                    name:
+                      type: string
+                  required:
+                    - type
+                    - name
+                - type: object
+                  properties:
+                    type:
+                      const: "organization"
+                    company_name:
+                      type: string
+                  required:
+                    - type
+                    - company_name
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /form-data-anyof:
+    post:
+      operationId: fakeapi.openapi31_handlers.test_form_data_anyof
+      summary: Test form data with anyOf composition
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              anyOf:
+                - type: object
+                  properties:
+                    username:
+                      type: string
+                  required:
+                    - username
+                - type: object
+                  properties:
+                    email:
+                      type: string
+                      format: email
+                  required:
+                    - email
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /health:
+    $ref: "#/components/pathItems/HealthCheck"
+
+  /secure-endpoint:
+    get:
+      operationId: fakeapi.openapi31_handlers.test_secure_endpoint
+      summary: Test mutualTLS security scheme
+      security:
+        - mutualTLS: []
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+
+webhooks:
+  newDataAvailable:
+    post:
+      operationId: fakeapi.openapi31_handlers.webhook_new_data
+      summary: Webhook notification for new data
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                event:
+                  type: string
+                data_id:
+                  type: string
+      responses:
+        "200":
+          description: Webhook received
+
+components:
+  schemas:
+    ItemWithSiblings:
+      $ref: "#/components/schemas/BaseItem"
+      description: "This description is a sibling to $ref (3.1 feature)"
+      summary: "Item schema with $ref siblings preserved"
+
+    BaseItem:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+
+  pathItems:
+    HealthCheck:
+      get:
+        operationId: fakeapi.openapi31_handlers.health_check
+        summary: Health check endpoint via pathItems reference
+        responses:
+          "200":
+            description: Healthy
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    status:
+                      const: "healthy"
+
+  securitySchemes:
+    mutualTLS:
+      type: mutualTLS
+      description: Mutual TLS authentication (OAS 3.1)
