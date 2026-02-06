@@ -91,6 +91,9 @@ class ResponseValidationOperation:
             nonlocal send
 
             if message["type"] == "http.response.start":
+                # Extract spec version from operation
+                spec_version = getattr(self._operation, 'spec_version', (3, 0, 0))
+
                 headers = message["headers"]
 
                 mime_type, encoding = self.extract_content_type(headers)
@@ -119,6 +122,7 @@ class ResponseValidationOperation:
                             self._operation.response_definition(status, mime_type)
                         ),
                         encoding=encoding,
+                        spec_version=spec_version,
                     )
                     send = validator.wrap_send(send)
 

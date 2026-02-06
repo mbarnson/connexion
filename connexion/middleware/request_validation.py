@@ -95,6 +95,9 @@ class RequestValidationOperation:
         return self._security_query_params
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send):
+        # Extract spec version from operation
+        spec_version = getattr(self._operation, 'spec_version', (3, 0, 0))
+
         # Validate parameters & headers
         uri_parser_class = self._operation._uri_parser_class
         uri_parser = uri_parser_class(
@@ -106,6 +109,7 @@ class RequestValidationOperation:
             uri_parser=uri_parser,
             strict_validation=self.strict_validation,
             security_query_params=self.security_query_params,
+            spec_version=spec_version,
         )
         parameter_validator.validate(scope)
 
@@ -136,6 +140,7 @@ class RequestValidationOperation:
                     uri_parser=self._operation.uri_parser_class(
                         self._operation.parameters, self._operation.body_definition()
                     ),
+                    spec_version=spec_version,
                 )
                 receive, scope = await validator.wrap_receive(receive, scope=scope)
 

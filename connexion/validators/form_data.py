@@ -1,13 +1,17 @@
 import logging
 import typing as t
 
-from jsonschema import Draft4Validator, ValidationError
+from jsonschema import Draft4Validator, Draft202012Validator, ValidationError
 from starlette.datastructures import Headers, UploadFile
 from starlette.formparsers import FormParser, MultiPartParser
 from starlette.types import Scope
 
 from connexion.exceptions import BadRequestProblem, ExtraParameterProblem
-from connexion.json_schema import Draft4RequestValidator, format_error_with_path
+from connexion.json_schema import (
+    Draft4RequestValidator,
+    Draft202012RequestValidator,
+    format_error_with_path,
+)
 from connexion.uri_parsing import AbstractURIParser
 from connexion.validators import AbstractRequestBodyValidator
 
@@ -26,6 +30,7 @@ class FormDataValidator(AbstractRequestBodyValidator):
         encoding: str,
         strict_validation: bool,
         uri_parser: t.Optional[AbstractURIParser] = None,
+        spec_version: tuple = (3, 0, 0),
     ) -> None:
         super().__init__(
             schema=schema,
@@ -35,9 +40,14 @@ class FormDataValidator(AbstractRequestBodyValidator):
             strict_validation=strict_validation,
         )
         self._uri_parser = uri_parser
+        self._spec_version = spec_version
 
     @property
     def _validator(self):
+        if self._spec_version >= (3, 1, 0):
+            return Draft202012RequestValidator(
+                self._schema, format_checker=Draft202012Validator.FORMAT_CHECKER
+            )
         return Draft4RequestValidator(
             self._schema, format_checker=Draft4Validator.FORMAT_CHECKER
         )

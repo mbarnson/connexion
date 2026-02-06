@@ -2,7 +2,7 @@ import collections
 import copy
 import logging
 
-from jsonschema import Draft4Validator, ValidationError
+from jsonschema import Draft4Validator, Draft202012Validator, ValidationError
 
 from connexion.exceptions import BadRequestProblem, ExtraParameterProblem
 from connexion.lifecycle import ConnexionRequest
@@ -25,6 +25,7 @@ class ParameterValidator:
         uri_parser,
         strict_validation=False,
         security_query_params=None,
+        spec_version=(3, 0, 0),
     ):
         """
         :param parameters: List of request parameter dictionaries
@@ -33,6 +34,7 @@ class ParameterValidator:
         :param security_query_params: List of query parameter names used for security.
             These parameters will be ignored when checking for extra parameters in case of
             strict validation.
+        :param spec_version: OpenAPI spec version tuple (e.g., (3, 1, 0))
         """
         self.parameters = collections.defaultdict(list)
         for p in parameters:
@@ -41,9 +43,11 @@ class ParameterValidator:
         self.uri_parser = uri_parser
         self.strict_validation = strict_validation
         self.security_query_params = set(security_query_params or [])
+        self._spec_version = spec_version
 
     @staticmethod
-    def validate_parameter(parameter_type, value, param, param_name=None):
+    def validate_parameter(parameter_type, value, param, param_name=None, spec_version=(3, 0, 0)):
+        # For 3.1 specs, is_nullable returns False since nullable keyword isn't used
         if is_nullable(param) and is_null(value):
             return
 
@@ -51,9 +55,14 @@ class ParameterValidator:
             param = copy.deepcopy(param)
             param = param.get("schema", param)
             try:
-                Draft4Validator(param, format_checker=draft4_format_checker).validate(
-                    value
-                )
+                if spec_version >= (3, 1, 0):
+                    Draft202012Validator(
+                        param, format_checker=Draft202012Validator.FORMAT_CHECKER
+                    ).validate(value)
+                else:
+                    Draft4Validator(param, format_checker=draft4_format_checker).validate(
+                        value
+                    )
             except ValidationError as exception:
                 return str(exception)
 
@@ -83,19 +92,19 @@ class ParameterValidator:
         :rtype: str
         """
         val = request.query_params.get(param["name"])
-        return self.validate_parameter("query", val, param)
+        return self.validate_parameter("query", val, param, spec_version=self._spec_version)
 
     def validate_path_parameter(self, param, request):
         val = request.path_params.get(param["name"].replace("-", "_"))
-        return self.validate_parameter("path", val, param)
+        return self.validate_parameter("path", val, param, spec_version=self._spec_version)
 
     def validate_header_parameter(self, param, request):
         val = request.headers.get(param["name"])
-        return self.validate_parameter("header", val, param)
+        return self.validate_parameter("header", val, param, spec_version=self._spec_version)
 
     def validate_cookie_parameter(self, param, request):
         val = request.cookies.get(param["name"])
-        return self.validate_parameter("cookie", val, param)
+        return self.validate_parameter("cookie", val, param, spec_version=self._spec_version)
 
     def validate(self, scope):
         logger.debug("%s validating parameters...", scope.get("path"))

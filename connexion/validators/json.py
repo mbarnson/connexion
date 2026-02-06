@@ -3,13 +3,15 @@ import logging
 import typing as t
 
 import jsonschema
-from jsonschema import Draft4Validator, ValidationError
+from jsonschema import Draft4Validator, Draft202012Validator, ValidationError
 from starlette.types import Scope
 
 from connexion.exceptions import BadRequestProblem, NonConformingResponseBody
 from connexion.json_schema import (
     Draft4RequestValidator,
     Draft4ResponseValidator,
+    Draft202012RequestValidator,
+    Draft202012ResponseValidator,
     format_error_with_path,
 )
 from connexion.validators import (
@@ -31,6 +33,7 @@ class JSONRequestBodyValidator(AbstractRequestBodyValidator):
         nullable=False,
         encoding: str,
         strict_validation: bool,
+        spec_version: tuple = (3, 0, 0),
         **kwargs,
     ) -> None:
         super().__init__(
@@ -40,9 +43,14 @@ class JSONRequestBodyValidator(AbstractRequestBodyValidator):
             encoding=encoding,
             strict_validation=strict_validation,
         )
+        self._spec_version = spec_version
 
     @property
     def _validator(self):
+        if self._spec_version >= (3, 1, 0):
+            return Draft202012RequestValidator(
+                self._schema, format_checker=Draft202012Validator.FORMAT_CHECKER
+            )
         return Draft4RequestValidator(
             self._schema, format_checker=Draft4Validator.FORMAT_CHECKER
         )
@@ -85,6 +93,11 @@ class DefaultsJSONRequestBodyValidator(JSONRequestBodyValidator):
 
     @property
     def _validator(self):
+        if self._spec_version >= (3, 1, 0):
+            validator_cls = self.extend_with_set_default(Draft202012RequestValidator)
+            return validator_cls(
+                self._schema, format_checker=Draft202012Validator.FORMAT_CHECKER
+            )
         validator_cls = self.extend_with_set_default(Draft4RequestValidator)
         return validator_cls(
             self._schema, format_checker=Draft4Validator.FORMAT_CHECKER
@@ -110,8 +123,24 @@ class DefaultsJSONRequestBodyValidator(JSONRequestBodyValidator):
 class JSONResponseBodyValidator(AbstractResponseBodyValidator):
     """Response body validator for json content types."""
 
+    def __init__(
+        self,
+        scope,
+        *,
+        schema: dict,
+        nullable: bool = False,
+        encoding: str,
+        spec_version: tuple = (3, 0, 0),
+    ) -> None:
+        super().__init__(scope, schema=schema, nullable=nullable, encoding=encoding)
+        self._spec_version = spec_version
+
     @property
     def validator(self) -> Draft4Validator:
+        if self._spec_version >= (3, 1, 0):
+            return Draft202012ResponseValidator(
+                self._schema, format_checker=Draft202012Validator.FORMAT_CHECKER
+            )
         return Draft4ResponseValidator(
             self._schema, format_checker=Draft4Validator.FORMAT_CHECKER
         )
