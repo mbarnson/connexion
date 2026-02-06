@@ -13,7 +13,7 @@ from copy import deepcopy
 
 import requests
 import yaml
-from jsonschema import Draft4Validator, RefResolver
+from jsonschema import Draft4Validator, Draft202012Validator, RefResolver
 from jsonschema.exceptions import RefResolutionError, ValidationError  # noqa
 from jsonschema.validators import extend
 
@@ -70,11 +70,15 @@ handlers = {
 }
 
 
-def resolve_refs(spec, store=None, base_uri=""):
+def resolve_refs(spec, store=None, base_uri="", spec_version=(3, 0, 0)):
     """
     Resolve JSON references like {"$ref": <some URI>} in a spec.
     Optionally takes a store, which is a mapping from reference URLs to a
     dereferenced objects. Prepopulating the store can avoid network calls.
+
+    For OpenAPI 3.1+ (spec_version >= (3, 1, 0)), preserves sibling keywords
+    alongside $ref per JSON Schema 2020-12 semantics where $ref is an applicator.
+    For earlier versions, strips $ref and merges content (legacy behavior).
     """
     spec = deepcopy(spec)
     store = store or {}
@@ -86,7 +90,18 @@ def resolve_refs(spec, store=None, base_uri=""):
             try:
                 # resolve known references
                 retrieved = deep_get(spec, path)
-                node.update(retrieved)
+
+                # For 3.1+, preserve sibling keywords (they override $ref content)
+                if spec_version >= (3, 1, 0):
+                    # Save all non-$ref keys before update
+                    siblings = {k: v for k, v in node.items() if k != "$ref"}
+                    node.update(retrieved)
+                    # Restore siblings (they take precedence per 2020-12 semantics)
+                    node.update(siblings)
+                else:
+                    # Legacy behavior: merge and strip $ref
+                    node.update(retrieved)
+
                 if isinstance(retrieved, Mapping) and "$ref" in retrieved:
                     node = _do_resolve(node)
                 node.pop("$ref", None)
@@ -148,6 +163,18 @@ Draft4ResponseValidator = extend(
     {
         "type": NullableTypeValidator,
         "enum": NullableEnumValidator,
+        "writeOnly": validate_writeOnly,
+        "x-writeOnly": validate_writeOnly,
+    },
+)
+
+# Draft 2020-12 validators for OpenAPI 3.1 support
+# Type arrays like ["string", "null"] are natively supported in 2020-12, no NullableTypeValidator needed
+Draft202012RequestValidator = Draft202012Validator
+
+Draft202012ResponseValidator = extend(
+    Draft202012Validator,
+    {
         "writeOnly": validate_writeOnly,
         "x-writeOnly": validate_writeOnly,
     },
