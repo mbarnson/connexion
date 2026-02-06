@@ -12,7 +12,7 @@ This roadmap delivers comprehensive OpenAPI 3.1.0 support to Connexion through f
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Spec Detection & Schema** - Version routing and meta-schema validation
+- [x] **Phase 1: Spec Detection & Schema** - Version routing and meta-schema validation
 - [ ] **Phase 2: JSON Schema 2020-12 Validation** - Core validation engine upgrade
 - [ ] **Phase 3: OAS 3.1 Features** - Structural features and operation handling
 - [ ] **Phase 4: Testing & Integration** - Comprehensive validation and CI
@@ -35,8 +35,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 2 plans
 
 Plans:
-- [ ] 01-01-PLAN.md -- Bundle OAS 3.1 meta-schema, create OpenAPI31Specification class, update version routing
-- [ ] 01-02-PLAN.md -- Test suite proving version detection, routing, validation, and zero regression
+- [x] 01-01-PLAN.md -- Bundle OAS 3.1 meta-schema, create OpenAPI31Specification class, update version routing
+- [x] 01-02-PLAN.md -- Test suite proving version detection, routing, validation, and zero regression
 
 ### Phase 2: JSON Schema 2020-12 Validation
 **Goal**: All request and response validation for 3.1 specs uses JSON Schema 2020-12 semantics with full support for type arrays, nullable compatibility, and updated keywords
@@ -111,10 +111,10 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Spec Detection & Schema | 0/2 | Planned | - |
+| 1. Spec Detection & Schema | 2/2 | ✓ Complete | 2026-02-05 |
 | 2. JSON Schema 2020-12 Validation | 0/TBD | Not started | - |
 | 3. OAS 3.1 Features | 0/TBD | Not started | - |
 | 4. Testing & Integration | 0/TBD | Not started | - |
 
 ---
-*Last updated: 2026-02-05 (phase 1 planned)*
+*Last updated: 2026-02-05 (phase 1 complete)*

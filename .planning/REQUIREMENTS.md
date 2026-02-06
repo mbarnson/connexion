@@ -4,11 +4,11 @@
 
 ### Spec Infrastructure (SPEC)
 
-- [ ] **SPEC-01**: Connexion detects `openapi: "3.1.x"` and routes to `OpenAPI31Specification` class (version tuple >= (3,1,0))
-- [ ] **SPEC-02**: `OpenAPI31Specification` loads and validates specs against the OAS 3.1 JSON meta-schema (`resources/schemas/v3.1/schema.json`)
+- [x] **SPEC-01**: Connexion detects `openapi: "3.1.x"` and routes to `OpenAPI31Specification` class (version tuple >= (3,1,0))
+- [x] **SPEC-02**: `OpenAPI31Specification` loads and validates specs against the OAS 3.1 JSON meta-schema (`resources/schemas/v3.1/schema.json`)
 - [ ] **SPEC-03**: `OpenAPI31Operation` extends operation handling for 3.1-specific features (webhooks, pathItems refs, etc.)
-- [ ] **SPEC-04**: Error messages reference 3.1.0 when a 3.1 spec fails validation (not "3.0.0")
-- [ ] **SPEC-05**: `Specification.from_dict()` correctly branches: `< (3,0,0)` → Swagger2, `>= (3,0,0) and < (3,1,0)` → OpenAPI3.0, `>= (3,1,0)` → OpenAPI3.1
+- [x] **SPEC-04**: Error messages reference 3.1.0 when a 3.1 spec fails validation (not "3.0.0")
+- [x] **SPEC-05**: `Specification.from_dict()` correctly branches: `< (3,0,0)` → Swagger2, `>= (3,0,0) and < (3,1,0)` → OpenAPI3.0, `>= (3,1,0)` → OpenAPI3.1
 
 ### JSON Schema 2020-12 Validation (VALID)
 
@@ -60,10 +60,10 @@
 
 | REQ-ID | Phase | Status |
 |--------|-------|--------|
-| SPEC-01 | Phase 1 | Pending |
-| SPEC-02 | Phase 1 | Pending |
-| SPEC-04 | Phase 1 | Pending |
-| SPEC-05 | Phase 1 | Pending |
+| SPEC-01 | Phase 1 | Complete |
+| SPEC-02 | Phase 1 | Complete |
+| SPEC-04 | Phase 1 | Complete |
+| SPEC-05 | Phase 1 | Complete |
 | VALID-01 | Phase 2 | Pending |
 | VALID-02 | Phase 2 | Pending |
 | VALID-03 | Phase 2 | Pending |
@@ -90,4 +90,4 @@
 | TEST-07 | Phase 4 | Pending |
 
 ---
-*Last updated: 2026-02-05 (roadmap creation)*
+*Last updated: 2026-02-05 (phase 1 complete)*
