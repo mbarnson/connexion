@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-05)
 ## Current Position
 
 Phase: 2 of 4 (JSON Schema 2020-12 Validation)
-Plan: 3 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: In progress
-Last activity: 2026-02-06 — Completed 02-03-PLAN.md (SongViber Spec Migration)
+Last activity: 2026-02-06 — Completed 02-02-PLAN.md (JSON Schema Validation Wiring)
 
 Progress: [████░░░░░░] 40%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 4
-- Average duration: 2.6 min
-- Total execution time: 0.17 hours
+- Total plans completed: 5
+- Average duration: 2.9 min
+- Total execution time: 0.24 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-spec-detection-schema | 2 | 5min | 2.5min |
-| 02-json-schema-2020-12-validation | 2 | 5.3min | 2.7min |
+| 02-json-schema-2020-12-validation | 3 | 10.5min | 3.5min |
 
 **Recent Trend:**
-- Last 3 plans: 2.8min (avg)
+- Last 3 plans: 3.5min (avg)
 - Trend: Stable
 
 *Updated after each plan completion*
@@ -67,6 +67,12 @@ Recent decisions affecting current work:
 - Version-aware resolve_refs with spec_version parameter for $ref sibling preservation
 - spec_version flows from Specification → Operation for validator selection
 
+**From 02-02 (JSON Schema Validation Wiring):**
+- spec_version flows from operations through middleware to all validators
+- Validators select Draft 2020-12 vs Draft 4 based on spec_version >= (3,1,0)
+- ParameterValidator.validate_parameter() maintains @staticmethod compatibility
+- All validators default to spec_version=(3,0,0) for backward compatibility
+
 **From 02-03 (SongViber Spec Migration):**
 - SongViber API spec migrated to OpenAPI 3.1 type arrays (zero nullable: true occurrences)
 - All 14 nullable fields use type: [original_type, "null"] pattern
@@ -87,6 +93,8 @@ None yet.
 - ✓ `$ref` resolution - version-aware sibling preservation - DONE (02-01)
 - ✓ Draft202012 validators created - DONE (02-01)
 - ✓ spec_version plumbing through operations - DONE (02-01)
+- ✓ spec_version wired through middleware to validators - DONE (02-02)
+- ✓ All VALID-* requirements complete with test coverage - DONE (02-02)
 - ✓ SongViber spec migrated to 3.1 type arrays - DONE (02-03)
 - Operations class decision: Reusing OpenAPIOperation for now (may need OpenAPI31Operation in Phase 3)
 
@@ -97,7 +105,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-06 (plan execution)
-Stopped at: Completed 02-03-PLAN.md
+Stopped at: Completed 02-02-PLAN.md
 Resume file: None
 
 ---
