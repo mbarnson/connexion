@@ -60,34 +60,34 @@
 
 | REQ-ID | Phase | Status |
 |--------|-------|--------|
-| SPEC-01 | — | pending |
-| SPEC-02 | — | pending |
-| SPEC-03 | — | pending |
-| SPEC-04 | — | pending |
-| SPEC-05 | — | pending |
-| VALID-01 | — | pending |
-| VALID-02 | — | pending |
-| VALID-03 | — | pending |
-| VALID-04 | — | pending |
-| VALID-05 | — | pending |
-| VALID-06 | — | pending |
-| VALID-07 | — | pending |
-| VALID-08 | — | pending |
-| VALID-09 | — | pending |
-| VALID-10 | — | pending |
-| FEAT-01 | — | pending |
-| FEAT-02 | — | pending |
-| FEAT-03 | — | pending |
-| FEAT-04 | — | pending |
-| FEAT-05 | — | pending |
-| FEAT-06 | — | pending |
-| TEST-01 | — | pending |
-| TEST-02 | — | pending |
-| TEST-03 | — | pending |
-| TEST-04 | — | pending |
-| TEST-05 | — | pending |
-| TEST-06 | — | pending |
-| TEST-07 | — | pending |
+| SPEC-01 | Phase 1 | Pending |
+| SPEC-02 | Phase 1 | Pending |
+| SPEC-04 | Phase 1 | Pending |
+| SPEC-05 | Phase 1 | Pending |
+| VALID-01 | Phase 2 | Pending |
+| VALID-02 | Phase 2 | Pending |
+| VALID-03 | Phase 2 | Pending |
+| VALID-04 | Phase 2 | Pending |
+| VALID-05 | Phase 2 | Pending |
+| VALID-06 | Phase 2 | Pending |
+| VALID-07 | Phase 2 | Pending |
+| VALID-08 | Phase 2 | Pending |
+| VALID-09 | Phase 2 | Pending |
+| VALID-10 | Phase 2 | Pending |
+| SPEC-03 | Phase 3 | Pending |
+| FEAT-01 | Phase 3 | Pending |
+| FEAT-02 | Phase 3 | Pending |
+| FEAT-03 | Phase 3 | Pending |
+| FEAT-04 | Phase 3 | Pending |
+| FEAT-05 | Phase 3 | Pending |
+| FEAT-06 | Phase 3 | Pending |
+| TEST-01 | Phase 4 | Pending |
+| TEST-02 | Phase 4 | Pending |
+| TEST-03 | Phase 4 | Pending |
+| TEST-04 | Phase 4 | Pending |
+| TEST-05 | Phase 4 | Pending |
+| TEST-06 | Phase 4 | Pending |
+| TEST-07 | Phase 4 | Pending |
 
 ---
-*Last updated: 2026-02-05 after initialization*
+*Last updated: 2026-02-05 (roadmap creation)*
