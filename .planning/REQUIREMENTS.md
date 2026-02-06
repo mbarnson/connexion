@@ -34,13 +34,13 @@
 
 ### Testing & Validation (TEST)
 
-- [ ] **TEST-01**: SongViber's `songviber-api.yaml` (openapi 3.1.0) loads and validates without errors
-- [ ] **TEST-02**: All existing Swagger 2.0 tests pass unchanged
-- [ ] **TEST-03**: All existing OpenAPI 3.0 tests pass unchanged
-- [ ] **TEST-04**: Comprehensive test suite covers every 3.1 feature (type arrays, const, webhooks, pathItems, nullable compat, $ref siblings, exclusiveMin/Max, minimal docs, mutualTLS, jsonSchemaDialect)
-- [ ] **TEST-05**: allOf/anyOf/oneOf form data has dedicated test fixtures and tests
-- [ ] **TEST-06**: CI clean: flake8, isort pass with no new warnings
-- [ ] **TEST-07**: 3.1 spec with all features combined loads and validates (integration test)
+- [x] **TEST-01**: SongViber's `songviber-api.yaml` (openapi 3.1.0) loads and validates without errors
+- [x] **TEST-02**: All existing Swagger 2.0 tests pass unchanged
+- [x] **TEST-03**: All existing OpenAPI 3.0 tests pass unchanged
+- [x] **TEST-04**: Comprehensive test suite covers every 3.1 feature (type arrays, const, webhooks, pathItems, nullable compat, $ref siblings, exclusiveMin/Max, minimal docs, mutualTLS, jsonSchemaDialect)
+- [x] **TEST-05**: allOf/anyOf/oneOf form data has dedicated test fixtures and tests
+- [x] **TEST-06**: CI clean: flake8, isort pass with no new warnings
+- [x] **TEST-07**: 3.1 spec with all features combined loads and validates (integration test)
 
 ## v2 Requirements (Deferred)
 
@@ -81,13 +81,13 @@
 | FEAT-04 | Phase 3 | Complete |
 | FEAT-05 | Phase 3 | Complete |
 | FEAT-06 | Phase 3 | Complete |
-| TEST-01 | Phase 4 | Pending |
-| TEST-02 | Phase 4 | Pending |
-| TEST-03 | Phase 4 | Pending |
-| TEST-04 | Phase 4 | Pending |
-| TEST-05 | Phase 4 | Pending |
-| TEST-06 | Phase 4 | Pending |
-| TEST-07 | Phase 4 | Pending |
+| TEST-01 | Phase 4 | Complete |
+| TEST-02 | Phase 4 | Complete |
+| TEST-03 | Phase 4 | Complete |
+| TEST-04 | Phase 4 | Complete |
+| TEST-05 | Phase 4 | Complete |
+| TEST-06 | Phase 4 | Complete |
+| TEST-07 | Phase 4 | Complete |
 
 ---
-*Last updated: 2026-02-05 (phase 3 complete)*
+*Last updated: 2026-02-06 (phase 4 complete — all requirements satisfied)*

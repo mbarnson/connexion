@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Spec Detection & Schema** - Version routing and meta-schema validation
 - [x] **Phase 2: JSON Schema 2020-12 Validation** - Core validation engine upgrade
 - [x] **Phase 3: OAS 3.1 Features** - Structural features and operation handling
-- [ ] **Phase 4: Testing & Integration** - Comprehensive validation and CI
+- [x] **Phase 4: Testing & Integration** - Comprehensive validation and CI
 
 ## Phase Details
 
@@ -106,9 +106,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 04-01-PLAN.md -- Lint cleanup + test consolidation into tests/openapi31/ directory
-- [ ] 04-02-PLAN.md -- Kitchen-sink YAML fixture, fakeapi handlers, integration test with HTTP round-trips
-- [ ] 04-03-PLAN.md -- Multi-version regression testing, comprehensive lint/type sweep, final quality gate
+- [x] 04-01-PLAN.md -- Lint cleanup + test consolidation into tests/openapi31/ directory
+- [x] 04-02-PLAN.md -- Kitchen-sink YAML fixture, fakeapi handlers, integration test with HTTP round-trips
+- [x] 04-03-PLAN.md -- Multi-version regression testing, comprehensive lint/type sweep, final quality gate
 
 ## Progress
 
@@ -120,7 +120,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 1. Spec Detection & Schema | 2/2 | ✓ Complete | 2026-02-05 |
 | 2. JSON Schema 2020-12 Validation | 3/3 | ✓ Complete | 2026-02-06 |
 | 3. OAS 3.1 Features | 3/3 | ✓ Complete | 2026-02-05 |
-| 4. Testing & Integration | 0/3 | In Progress | - |
+| 4. Testing & Integration | 3/3 | ✓ Complete | 2026-02-06 |
 
 ---
-*Last updated: 2026-02-06 (phase 4 planned)*
+*Last updated: 2026-02-06 (phase 4 complete — all phases done)*
