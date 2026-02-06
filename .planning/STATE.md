@@ -47,7 +47,7 @@ Recent decisions affecting current work:
 - Fork, not upstream PR (optimized for our timeline and needs)
 - Zero test breakage (3.0/2.0 must work identically)
 - Full 3.1 spec coverage ("If it's valid in the spec, it should be valid here")
-- `nullable: true` compat in 3.1 (SongViber spec uses it; common in real-world specs)
+- `nullable: true` **strict rejection** in 3.1 (rejected at load time with actionable error; SongViber spec to be updated)
 - allOf/anyOf/oneOf in form data (valid per 3.1 spec)
 
 **From 01-01 (Spec Detection & Schema):**

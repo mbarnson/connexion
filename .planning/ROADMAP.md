@@ -39,7 +39,7 @@ Plans:
 - [x] 01-02-PLAN.md -- Test suite proving version detection, routing, validation, and zero regression
 
 ### Phase 2: JSON Schema 2020-12 Validation
-**Goal**: All request and response validation for 3.1 specs uses JSON Schema 2020-12 semantics with full support for type arrays, nullable compatibility, and updated keywords
+**Goal**: All request and response validation for 3.1 specs uses JSON Schema 2020-12 semantics with full support for type arrays, strict nullable rejection, and updated keywords
 
 **Depends on**: Phase 1
 
@@ -49,7 +49,7 @@ Plans:
   1. Request bodies in 3.1 specs validate using `Draft202012Validator` (not Draft4)
   2. Response bodies in 3.1 specs validate using `Draft202012Validator`
   3. Type arrays work: `type: ["string", "null"]` correctly validates null or string values
-  4. Backwards-compatible nullable: `nullable: true` in 3.1 specs is accepted and works identically to type arrays
+  4. Strict nullable: `nullable: true` in 3.1 specs is rejected at load time with an actionable error message pointing to `type: ["string", "null"]`
   5. Numeric exclusive bounds work: `exclusiveMinimum: 5` validates correctly (not as boolean)
   6. The `const` keyword validates values correctly
   7. `$ref` with sibling properties preserves siblings after resolution
