@@ -23,7 +23,12 @@ logger = logging.getLogger(__name__)
 
 from .exceptions import InvalidSpecification
 from .json_schema import NullableTypeValidator, URLHandler, resolve_refs
-from .operations import AbstractOperation, OpenAPI31Operation, OpenAPIOperation, Swagger2Operation
+from .operations import (
+    AbstractOperation,
+    OpenAPI31Operation,
+    OpenAPIOperation,
+    Swagger2Operation,
+)
 from .utils import deep_get
 
 validate_properties = Draft4Validator.VALIDATORS["properties"]

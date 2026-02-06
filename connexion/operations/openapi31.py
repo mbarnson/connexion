@@ -4,7 +4,6 @@ with OAS 3.1-specific context (jsonSchemaDialect).
 """
 
 import logging
-import typing as t
 
 from connexion.operations.openapi import OpenAPIOperation
 
